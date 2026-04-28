@@ -1,53 +1,115 @@
-def f(x: float, n: float) -> float:
-    """Diese Funktion berechnet f(x) = x^2 - n, um die Nullstelle zu finden, die der Quadratwurzel von n entspricht."""
-    return x**2 - n
+import math                                                     # Importiert die math-Bibliothek, um mathematische Funktionen wie sqrt zu verwenden
 
-def bisektion(a: float, b: float, n: float, epsilon: float):
-    """Diese Funktion implementiert das Bisektionsverfahren, um die Nullstelle von f(x) = x^2 - n zu finden."""
-    if f(a, n) * f(b, n) > 0:                           # Überprüfen, ob die Funktion an den Endpunkten des Intervalls unterschiedliche Vorzeichen hat
-        print("Fehler: Kein gültiges Intervall gefunden.")  
-        return None
-    i = 0
-    while True:
-        c = (a + b) / 2                         # Berechnung des Mittelpunkts des Intervalls    
-        i+=1                                    # Erhöhung der Iterationszähler
 
-        if abs(f(c, n)) < epsilon:              # Überprüfen, ob die Funktion am Mittelpunkt nahe genug an Null ist
-            return c, i                         # Rückgabe der Nullstelle und der Anzahl der Iterationen
-        
-        if f(a, n) * f(c, n) < 0:               # Überprüfen, ob die Nullstelle im linken oder rechten Teilintervall liegt
+def f(x: float, n: float, funktion: str) :                      
+    """Evaluates the function at a given x and n."""
+    return eval(funktion, {"x": x, "n": n, "math": math})       # Erlaubt die Verwendung von math-Funktionen in der Funktion, z.B. math.sqrt(n)
+
+
+def bisektion(a: float,b: float,n: float,epsilon: float,funktion: str) :
+    """Führt die Bisektionsmethode durch, um eine Nullstelle der Funktion f(x) = 0 zu finden."""
+
+    if f(a, n, funktion) == 0:                  # Überprüft, ob a bereits eine Nullstelle ist
+        return a, 0
+
+    if f(b, n, funktion) == 0:                  # Überprüft, ob b bereits eine Nullstelle ist
+        return b, 0
+
+    if f(a, n, funktion) * f(b, n, funktion) > 0:   # Überprüft, ob f(a) und f(b) das gleiche Vorzeichen haben, was bedeutet, dass keine Nullstelle im Intervall liegt
+        print("Fehler: Kein gültiges Intervall gefunden.")
+        return None                                 # Gibt None zurück, wenn kein gültiges Intervall gefunden wird
+
+    iterationen = 0
+
+    while True:                 # Solange bis die gewünschte Genauigkeit erreicht ist
+        c = (a + b) / 2
+        iterationen += 1
+
+        if abs(f(c, n, funktion)) < epsilon:        # Überprüft, ob die Funktion an der Stelle c nahe genug an 0 ist, um als Nullstelle betrachtet zu werden
+            return c, iterationen
+
+        if f(a, n, funktion) * f(c, n, funktion) < 0:   # Überprüft, ob die Nullstelle im Intervall [a, c] liegt
             b = c
         else:
             a = c
 
-def solver():                               
-    """Diese Funktion fordert den Benutzer auf, die Zahl n und die gewünschte Genauigkeit epsilon einzugeben, 
-       und ruft dann die bisektion-Funktion auf, um die Quadratwurzel von n zu berechnen."""
+
+def teste_wurzelfunktion(epsilon: float) :
+    """Testet die Bisektionsmethode an der Funktion f(x) = x^2 - n für verschiedene Werte von n."""
+
+    funktion = "x**2 - n"               # Definiert die Funktion, die getestet werden soll, in diesem Fall die Wurzelfunktion, die die Nullstelle bei sqrt(n) hat
+    testwerte = [25, 81, 144]           # Definiert eine Liste von Testwerten für n, für die die Wurzel berechnet werden soll. Diese Werte wurden gewählt, weil sie perfekte Quadratzahlen sind, deren Quadratwurzeln ganze Zahlen sind (5, 9 und 12). Dadurch können wir die Genauigkeit der Bisektionsmethode leicht überprüfen.
+
+    for n in testwerte:                 # Für jeden Testwert n wird die Bisektionsmethode angewendet, um die Nullstelle der Funktion zu finden, und die Ergebnisse werden mit der analytischen Lösung (der Quadratwurzel von n) verglichen.
+        a = 0
+        b = n if n > 1 else 1
+
+        ergebnis = bisektion(a, b, n, epsilon, funktion)
+
+        if ergebnis is not None:
+            nullstelle, iterationen = ergebnis
+            analytische_loesung = math.sqrt(n)      # Berechnet die analytische Lösung, die Quadratwurzel von n, um die Genauigkeit der numerischen Lösung zu überprüfen
+            abweichung = abs(nullstelle - analytische_loesung)  # Berechnet die Abweichung zwischen der numerischen Lösung (der gefundenen Nullstelle) und der analytischen Lösung (der Quadratwurzel von n), um die Genauigkeit der Bisektionsmethode zu bewerten
+
+            
+            print("n =", n)
+            print("Funktion:", funktion)
+            print("Intervall: [", a, ",", b, "]")
+            print("Epsilon =", epsilon)
+            print("Iterationen:", iterationen)
+            print("Numerische Lösung:", nullstelle)
+            print("Analytische Lösung:", analytische_loesung)
+            print("Abweichung:", abweichung)
+
+
+def solver() :
+    """Fragt Benutzereingaben ab und startet den Bisektionssolver."""
+
     try:
-        n = float(input("Geben Sie die Zahl n ein, deren Quadratwurzel Sie berechnen möchten: "))   # Eingabe der Zahl n, deren Quadratwurzel berechnet werden soll
-        epsilon = float(input("Geben Sie die gewünschte Genauigkeit (epsilon) ein: "))              # Eingabe der gewünschten Genauigkeit epsilon, die bestimmt, wie nahe die Nullstelle an Null sein muss, um als Lösung akzeptiert zu werden
-        
+        print("Beispiel für die Wurzelfunktion: x**2 - n")
+        funktion = input("Geben Sie die Funktion f(x) ein: ")
+
+        n = float(input("Geben Sie den Wert für n ein: "))
+        epsilon = float(input("Geben Sie die gewünschte Genauigkeit epsilon ein: "))
+
         if n < 0:
-            print("Fehler: n muss eine nicht-negative Zahl sein.")                                  # Überprüfen, ob n negativ ist, da die Quadratwurzel von negativen Zahlen nicht definiert ist
+            print("Fehler: n muss eine nicht-negative Zahl sein.")
             return
-        if epsilon <= 0:                                                                            # Überprüfen, ob epsilon eine positive Zahl ist, da die Genauigkeit positiv sein muss
+
+        if epsilon <= 0:
             print("Fehler: epsilon muss eine positive Zahl sein.")
             return
-        a=0
-        b = n if n > 1 else 1                                                                       # Festlegen des Intervalls [a, b], wobei a = 0 und b entweder n oder 1 ist, je nachdem, ob n größer als 1 ist oder nicht    
-        ergebnis = bisektion(a, b, n, epsilon)                                                      # Aufrufen der bisektion-Funktion, um die Nullstelle zu berechnen   
-        if ergebnis is not None:                                                                    # Überprüfen, ob die bisektion-Funktion eine gültige Nullstelle zurückgegeben hat
-            nullstelle, iterationen = ergebnis                                                      # Extrahieren der Nullstelle und der Anzahl der Iterationen aus dem Ergebnis        
-            print("n = ", n)
-            print("Epsilon = ", epsilon)
+
+        a = float(input("Geben Sie den linken Intervallwert a ein: "))
+        b = float(input("Geben Sie den rechten Intervallwert b ein: "))
+
+        ergebnis = bisektion(a, b, n, epsilon, funktion)
+
+        if ergebnis is not None:
+            nullstelle, iterationen = ergebnis
+
+           
+            print("Funktion:", funktion)
+            print("n =", n)
+            print("Epsilon =", epsilon)
+            print("Intervall: [", a, ",", b, "]")
             print("Iterationen:", iterationen)
-            print("nullstelle:", nullstelle)
-            print("interval: [", a, ",", b, "]")
-            print("abweichung:", abs(nullstelle**2 - n))
+            print("Nullstelle:", nullstelle)
+            print("Abweichung f(x):", abs(f(nullstelle, n, funktion)))      # Berechnet die Abweichung von f(nullstelle) von 0, um zu überprüfen, wie gut die gefundene Nullstelle tatsächlich eine Nullstelle der Funktion ist. Je kleiner diese Abweichung, desto genauer ist die gefundene Nullstelle.
 
     except ValueError:
         print("Fehler: Bitte geben Sie gültige Zahlen ein.")
 
+    except NameError:
+        print("Fehler: Die Funktion enthält ungültige Variablen.")
+
+    except SyntaxError:
+        print("Fehler: Die Funktion ist syntaktisch falsch.")
+
+
 if __name__ == "__main__":
-    
+    print("Automatische Tests für Aufgabe 5:")
+    teste_wurzelfunktion(0.00001)                   # Führt automatische Tests für die Wurzelfunktion mit einer Genauigkeit von 0.00001 durch, um die Funktionsweise der Bisektionsmethode zu überprüfen und sicherzustellen, dass sie korrekt
+
+    print("\nEigener Solver:")
     solver()
