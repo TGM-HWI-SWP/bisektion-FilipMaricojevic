@@ -3,12 +3,11 @@ import math
 
 def f(x: float, n: float, funktion: str) :
     """Berechnet den Funktionswert f(x) für eine gegebene Funktion."""
-    return eval(funktion, {"x": x, "n": n, "math": math})   # Führt die Funktion, die als String übergeben wird, aus und berechnet den Funktionswert für die gegebenen Werte von x und n. Die math-Bibliothek wird ebenfalls bereitgestellt, damit mathematische Funktionen in der Funktion verwendet werden können.
+    return eval(funktion, {"x": x, "n": n, "math": math})   # Führt die Funktion aus und berechnet den Funktionswert für die gegebenen Werte von x und n
 
 
 def regula_falsi(a: float,b: float,n: float,epsilon: float,funktion: str) :
-    """Führt das Regula-falsi-Verfahren durch, um eine Nullstelle der Funktion f(x) = 0 zu finden. Dieses Verfahren ist eine Verbesserung der Bisektionsmethode, da es die Nullstelle näherungsweise berechnet, anstatt einfach den Mittelpunkt des Intervalls zu verwenden."""
-
+    """Führt das Regula-falsi-Verfahren durch, um eine Nullstelle der Funktion f(x) = 0 zu finden"""
     fa = f(a, n, funktion)
     fb = f(b, n, funktion)
 
@@ -43,7 +42,7 @@ def regula_falsi(a: float,b: float,n: float,epsilon: float,funktion: str) :
 
 
 def teste_wurzelfunktion(epsilon: float) :
-    """Testet das Regula-falsi-Verfahren an der Funktion f(x) = x^2 - n für verschiedene Werte von n. Diese Funktion hat die Nullstelle bei sqrt(n), daher können wir die Genauigkeit des Verfahrens überprüfen, indem wir die gefundene Nullstelle mit der analytischen Lösung (der Quadratwurzel von n) vergleichen."""
+    """Testet das Regula-falsi-Verfahren an der Funktion f(x) = x^2 - n für verschiedene Werte von n"""
 
     funktion = "x**2 - n"                                   # Definiert die Funktion, die getestet werden soll, in diesem Fall die Wurzelfunktion, die die Nullstelle bei sqrt(n) hat
     testwerte = [25, 81, 144]
@@ -52,12 +51,12 @@ def teste_wurzelfunktion(epsilon: float) :
         a = 0
         b = n if n > 1 else 1
 
-        ergebnis = regula_falsi(a, b, n, epsilon, funktion) # Führt das Regula-falsi-Verfahren für die Funktion f(x) = x^2 - n durch, um die Nullstelle zu finden, die der Quadratwurzel von n entspricht. Das Intervall [a, b] wird so gewählt, dass es die Nullstelle enthält (zwischen 0 und n, oder zwischen 0 und 1, wenn n kleiner oder gleich 1 ist).
+        ergebnis = regula_falsi(a, b, n, epsilon, funktion) # Führt das Regula-falsi-Verfahren für die Funktion f(x) = x^2 - n durch, um die Nullstelle zu finden
 
         if ergebnis is not None:                            # Wenn das Verfahren eine Nullstelle gefunden hat, werden die Ergebnisse mit der analytischen Lösung verglichen, um die Genauigkeit zu bewerten.
             nullstelle, iterationen = ergebnis
             analytische_loesung = math.sqrt(n)              # Berechnet die analytische Lösung, die Quadratwurzel von n, um die Genauigkeit der numerischen Lösung zu überprüfen
-            abweichung = abs(nullstelle - analytische_loesung)  # Berechnet die Abweichung zwischen der numerischen Lösung (der gefundenen Nullstelle) und der analytischen Lösung (der Quadratwurzel von n), um die Genauigkeit des Regula-falsi-Verfahrens zu bewerten.
+            abweichung = abs(nullstelle - analytische_loesung)  # Berechnet die Abweichung zwischen der numerischen Lösung und der analytischen Lösung 
 
             print("n =", n)
             print("Funktion:", funktion)
@@ -67,7 +66,7 @@ def teste_wurzelfunktion(epsilon: float) :
             print("Numerische Lösung:", nullstelle)
             print("Analytische Lösung:", analytische_loesung)
             print("Abweichung:", abweichung)
-            print("Abweichung f(x):", abs(f(nullstelle, n, funktion)))  # Berechnet die Abweichung von f(nullstelle) von 0, um zu überprüfen, wie gut die gefundene Nullstelle tatsächlich eine Nullstelle der Funktion ist. Je kleiner diese Abweichung, desto genauer ist die gefundene Nullstelle.
+            print("Abweichung f(x):", abs(f(nullstelle, n, funktion)))  # Berechnet die Abweichung von f(nullstelle) von 0, um zu überprüfen, wie gut die gefundene Nullstelle tatsächlich eine Nullstelle der Funktion ist
 
 
 def solver2() :
@@ -91,7 +90,7 @@ def solver2() :
         a = float(input("Geben Sie den linken Intervallwert a ein: "))
         b = float(input("Geben Sie den rechten Intervallwert b ein: "))
 
-        ergebnis = regula_falsi(a, b, n, epsilon, funktion)         # Führt das Regula-falsi-Verfahren für die Funktion f(x) = x^2 - n durch, um die Nullstelle zu finden, die der Quadratwurzel von n entspricht. Das Intervall [a, b] wird vom Benutzer eingegeben und sollte so gewählt werden, dass es die Nullstelle enthält.
+        ergebnis = regula_falsi(a, b, n, epsilon, funktion)         # Führt das Regula-falsi-Verfahren für die Funktion f(x) = x^2 - n durch, um die Nullstelle zu finden, die der Quadratwurzel von n entspricht. 
 
         if ergebnis is not None:                                    # Wenn das Verfahren eine Nullstelle gefunden hat, werden die Ergebnisse mit der analytischen Lösung verglichen, um die Genauigkeit zu bewerten.
             nullstelle, iterationen = ergebnis
@@ -103,7 +102,7 @@ def solver2() :
             print("Intervall: [", a, ",", b, "]")
             print("Iterationen:", iterationen)
             print("Nullstelle:", nullstelle)
-            print("Abweichung f(x):", abs(f(nullstelle, n, funktion)))  # Berechnet die Abweichung von f(nullstelle) von 0, um zu überprüfen, wie gut die gefundene Nullstelle tatsächlich eine Nullstelle der Funktion ist. Je kleiner diese Abweichung, desto genauer ist die gefundene Nullstelle.
+            print("Abweichung f(x):", abs(f(nullstelle, n, funktion)))  # Berechnet die Abweichung von f(nullstelle) von 0, um zu überprüfen, wie gut die gefundene Nullstelle tatsächlich eine Nullstelle der Funktion ist. 
 
     except ValueError:
         print("Fehler: Bitte geben Sie gültige Zahlen ein.")
@@ -120,7 +119,7 @@ def solver2() :
 
 if __name__ == "__main__":
     print("Automatische Tests für Aufgabe 6:")
-    teste_wurzelfunktion(0.00001)                               # Führt automatische Tests für die Wurzelfunktion mit einer Genauigkeit von 0.00001 durch, um die Funktionsweise des Regula-falsi-Verfahrens zu überprüfen und sicherzustellen, dass es korrekt funktioniert.
+    teste_wurzelfunktion(0.00001)                         # Führt automatische Tests für die Wurzelfunktion mit einer Genauigkeit von 0.00001 durch
 
     print("\nEigener Regula-falsi-Solver:")
     solver2()

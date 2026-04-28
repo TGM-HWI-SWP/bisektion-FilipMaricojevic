@@ -2,7 +2,7 @@ import math                                                     # Importiert die
 
 
 def f(x: float, n: float, funktion: str) :                      
-    """Evaluates the function at a given x and n."""
+    """Berechnet den Funktionswert f(x) für eine gegebene Funktion."""
     return eval(funktion, {"x": x, "n": n, "math": math})       # Erlaubt die Verwendung von math-Funktionen in der Funktion, z.B. math.sqrt(n)
 
 
@@ -38,8 +38,7 @@ def teste_wurzelfunktion(epsilon: float) :
     """Testet die Bisektionsmethode an der Funktion f(x) = x^2 - n für verschiedene Werte von n."""
 
     funktion = "x**2 - n"               # Definiert die Funktion, die getestet werden soll, in diesem Fall die Wurzelfunktion, die die Nullstelle bei sqrt(n) hat
-    testwerte = [25, 81, 144]           # Definiert eine Liste von Testwerten für n, für die die Wurzel berechnet werden soll. Diese Werte wurden gewählt, weil sie perfekte Quadratzahlen sind, deren Quadratwurzeln ganze Zahlen sind (5, 9 und 12). Dadurch können wir die Genauigkeit der Bisektionsmethode leicht überprüfen.
-
+    testwerte = [25, 81, 144]          
     for n in testwerte:                 # Für jeden Testwert n wird die Bisektionsmethode angewendet, um die Nullstelle der Funktion zu finden, und die Ergebnisse werden mit der analytischen Lösung (der Quadratwurzel von n) verglichen.
         a = 0
         b = n if n > 1 else 1
@@ -49,7 +48,7 @@ def teste_wurzelfunktion(epsilon: float) :
         if ergebnis is not None:
             nullstelle, iterationen = ergebnis
             analytische_loesung = math.sqrt(n)      # Berechnet die analytische Lösung, die Quadratwurzel von n, um die Genauigkeit der numerischen Lösung zu überprüfen
-            abweichung = abs(nullstelle - analytische_loesung)  # Berechnet die Abweichung zwischen der numerischen Lösung (der gefundenen Nullstelle) und der analytischen Lösung (der Quadratwurzel von n), um die Genauigkeit der Bisektionsmethode zu bewerten
+            abweichung = abs(nullstelle - analytische_loesung)  # Berechnet die Abweichung zwischen der numerischen Lösung und der analytischen Lösung 
 
             
             print("n =", n)
@@ -95,7 +94,7 @@ def solver() :
             print("Intervall: [", a, ",", b, "]")
             print("Iterationen:", iterationen)
             print("Nullstelle:", nullstelle)
-            print("Abweichung f(x):", abs(f(nullstelle, n, funktion)))      # Berechnet die Abweichung von f(nullstelle) von 0, um zu überprüfen, wie gut die gefundene Nullstelle tatsächlich eine Nullstelle der Funktion ist. Je kleiner diese Abweichung, desto genauer ist die gefundene Nullstelle.
+            print("Abweichung f(x):", abs(f(nullstelle, n, funktion)))      # Berechnet die Abweichung von f(nullstelle) von 0, um zu überprüfen, wie gut die gefundene Nullstelle tatsächlich eine Nullstelle der Funktion ist
 
     except ValueError:
         print("Fehler: Bitte geben Sie gültige Zahlen ein.")
@@ -109,7 +108,8 @@ def solver() :
 
 if __name__ == "__main__":
     print("Automatische Tests für Aufgabe 5:")
-    teste_wurzelfunktion(0.00001)                   # Führt automatische Tests für die Wurzelfunktion mit einer Genauigkeit von 0.00001 durch, um die Funktionsweise der Bisektionsmethode zu überprüfen und sicherzustellen, dass sie korrekt
+    teste_wurzelfunktion(0.00001)                   # Führt automatische Tests für die Wurzelfunktion mit einer Genauigkeit von 0.00001 durch
+    
 
     print("\nEigener Solver:")
     solver()
