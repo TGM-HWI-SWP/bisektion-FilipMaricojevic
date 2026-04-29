@@ -6,11 +6,20 @@
 Dieses Projekt dient als Vorlage für ein kleines Softwareentwicklungs- und Projektmanagement-Projekt. Es enthält verschiedene Aufgaben, die jeweils in separaten Dateien bearbeitet werden.
 
 ## Aufgaben
-- Aufgabe5.py: [In Aufgabe 5 ]
-- Aufgabe6.py: [Kurze Beschreibung der Aufgabe]
-- Aufgabe7.py: [Kurze Beschreibung der Aufgabe]
-- Aufgabe8.py: [Kurze Beschreibung der Aufgabe]
-- Aufgabe9.py: [Kurze Beschreibung der Aufgabe]
+- Aufgabe5.py: [In Aufgabe 5 wird ein Solver mit dem Bisektionsverfahren programmiert.  
+Der Benutzer kann eine Funktion, einen Wert für n, ein Intervall und eine Genauigkeit eingeben. Das Programm berechnet dann schrittweise eine Nullstelle der Funktion.  
+Getestet wird der Solver mit der Wurzelfunktion x**2 - n für n = 25, 81 und 144]
+- Aufgabe6.py: [In Aufgabe 6 wird ein zweites Verfahren umgesetzt, und zwar Regula falsi.  
+Es funktioniert ähnlich wie die Bisektion, aber der neue Näherungswert wird nicht mit der Mitte des Intervalls berechnet, sondern mit einer Sekante.  
+Auch dieses Verfahren wird mit der Wurzelfunktion x**2 - n getestet und mit der echten Wurzel verglichen.]
+- Aufgabe7.py: [In Aufgabe 7 wird die Bisektion mit matplotlib grafisch dargestellt.  
+Das Programm zeigt die Funktion, den aktuellen Näherungswert, die Genauigkeit pro Iteration und die aktuelle Lösung pro Iteration.  
+Dadurch sieht man, wie sich der Solver Schritt für Schritt der Nullstelle nähert.]
+- Aufgabe8.py: [In Aufgabe 8 wird der Solver mit dem Polynom 2*x + x**2 + 3*x**3 - x**4 getestet. Es wird ein passendes Intervall [3, 4] verwendet, um die Nullstelle bei ungefähr 3,45.. zu finden.  
+Danach wird geprüft, wie viele Iterationen für 10^-2 und 10^-8 benötigt werden.]
+- Aufgabe9.py: [In Aufgabe 9 wird der Solver auf ein reales Problem angewendet.  
+Es geht um eine Leitung zwischen zwei Masten, die in der Mitte 10 m durchhängt.  
+Zuerst wird der Krümmungsradius mit dem Solver berechnet. Danach wird mit diesem Wert die Länge der Leitung berechnet.]
 
 ## Voraussetzungen
 - Python 3.x
