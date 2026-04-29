@@ -2,12 +2,12 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def f(x: float, n: float):
+def f(x: float, n: float) -> float:
     """Berechnet f(x) = x² - n."""
     return x**2 - n
 
 
-def plotter() :
+def plotter() -> None:
     """Visualisiert die Bisektion mit matplotlib."""
 
     # Testwerte für Aufgabe 7

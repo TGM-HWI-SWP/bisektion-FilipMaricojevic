@@ -3,7 +3,7 @@ def f(x: float, n: float, funktion: str) -> float:
     return eval(funktion, {"x": x, "n": n})
 
 
-def bisektion(a: float,b: float,n: float,epsilon: float,funktion: str) :
+def bisektion(a: float,b: float,n: float,epsilon: float,funktion: str) -> tuple[float, int] | None:
     """Berechnet eine Nullstelle mit dem Bisektionsverfahren."""
 
     if f(a, n, funktion) * f(b, n, funktion) > 0:
@@ -25,7 +25,7 @@ def bisektion(a: float,b: float,n: float,epsilon: float,funktion: str) :
             a = c
 
 
-def solver():
+def solver() -> None:
     """Startet den Solver für Aufgabe 8."""
 
     try:

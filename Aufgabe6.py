@@ -1,12 +1,12 @@
 import math
 
 
-def f(x: float, n: float, funktion: str) :
+def f(x: float, n: float, funktion: str) -> float:
     """Berechnet den Funktionswert f(x) für eine gegebene Funktion."""
     return eval(funktion, {"x": x, "n": n, "math": math})   # Führt die Funktion aus und berechnet den Funktionswert für die gegebenen Werte von x und n
 
 
-def regula_falsi(a: float,b: float,n: float,epsilon: float,funktion: str) :
+def regula_falsi(a: float,b: float,n: float,epsilon: float,funktion: str) -> tuple[float, int] | None:
     """Führt das Regula-falsi-Verfahren durch, um eine Nullstelle der Funktion f(x) = 0 zu finden"""
     fa = f(a, n, funktion)
     fb = f(b, n, funktion)
@@ -41,11 +41,11 @@ def regula_falsi(a: float,b: float,n: float,epsilon: float,funktion: str) :
             a = c
 
 
-def teste_wurzelfunktion(epsilon: float) :
+def teste_wurzelfunktion(epsilon: float) -> None:
     """Testet das Regula-falsi-Verfahren an der Funktion f(x) = x^2 - n für verschiedene Werte von n"""
 
     funktion = "x**2 - n"                                   # Definiert die Funktion, die getestet werden soll, in diesem Fall die Wurzelfunktion, die die Nullstelle bei sqrt(n) hat
-    testwerte = [25, 81, 144]
+    testwerte = [25, 81, 144]                               
 
     for n in testwerte:
         a = 0
@@ -69,7 +69,7 @@ def teste_wurzelfunktion(epsilon: float) :
             print("Abweichung f(x):", abs(f(nullstelle, n, funktion)))  # Berechnet die Abweichung von f(nullstelle) von 0, um zu überprüfen, wie gut die gefundene Nullstelle tatsächlich eine Nullstelle der Funktion ist
 
 
-def solver2() :
+def solver2() -> None:
     """Fragt Benutzereingaben ab und startet Regula falsi."""
 
     try:

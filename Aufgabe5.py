@@ -1,12 +1,12 @@
 import math                                                     # Importiert die math-Bibliothek, um mathematische Funktionen wie sqrt zu verwenden
 
 
-def f(x: float, n: float, funktion: str) :                      
+def f(x: float, n: float, funktion: str) -> float:
     """Berechnet den Funktionswert f(x) für eine gegebene Funktion."""
     return eval(funktion, {"x": x, "n": n, "math": math})       # Erlaubt die Verwendung von math-Funktionen in der Funktion, z.B. math.sqrt(n)
 
 
-def bisektion(a: float,b: float,n: float,epsilon: float,funktion: str) :
+def bisektion(a: float,b: float,n: float,epsilon: float,funktion: str) -> tuple[float, int] | None:
     """Führt die Bisektionsmethode durch, um eine Nullstelle der Funktion f(x) = 0 zu finden."""
 
     if f(a, n, funktion) == 0:                  # Überprüft, ob a bereits eine Nullstelle ist
@@ -34,7 +34,7 @@ def bisektion(a: float,b: float,n: float,epsilon: float,funktion: str) :
             a = c
 
 
-def teste_wurzelfunktion(epsilon: float) :
+def teste_wurzelfunktion(epsilon: float) -> None:
     """Testet die Bisektionsmethode an der Funktion f(x) = x^2 - n für verschiedene Werte von n."""
 
     funktion = "x**2 - n"               # Definiert die Funktion, die getestet werden soll, in diesem Fall die Wurzelfunktion, die die Nullstelle bei sqrt(n) hat
@@ -61,7 +61,7 @@ def teste_wurzelfunktion(epsilon: float) :
             print("Abweichung:", abweichung)
 
 
-def solver() :
+def solver() -> None:
     """Fragt Benutzereingaben ab und startet den Bisektionssolver."""
 
     try:
