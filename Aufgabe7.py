@@ -77,7 +77,7 @@ def plotter() -> None:
             b = c
         else:
             a = c
-
+    print("--------------------------------")
     print("Ergebnis der Bisektion")
     print("n =", n)
     print("Epsilon =", epsilon)

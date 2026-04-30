@@ -5,7 +5,7 @@ from Aufgabe6 import solver2, regula_falsi
 from Aufgabe7 import plotter
 
 
-def leitung_laenge(radius: float) -> float:
+def leitung_länge(radius: float) -> float:
     """Berechnet die Länge der durchhängenden Leitung."""
     return 2 * radius * math.sinh(100 / (2 * radius))
 
@@ -18,7 +18,8 @@ def aufgabe9() -> None:
         n = 0
         a = 100
         b = 150
-
+        
+        print("--------------------------------")
         print("Aufgabe 9: Durchhängende Leitung")
         print("Gleichung: x * cosh(50 / x) - x - 10 = 0")
         print("Intervall: [100, 150]")
@@ -35,9 +36,9 @@ def aufgabe9() -> None:
 
         if ergebnis_bisektion is not None:
             radius, iterationen = ergebnis_bisektion
-            laenge = leitung_laenge(radius)
+            laenge = leitung_länge(radius)
 
-           
+            print("--------------------------------")
             print("Aufgabe 9 mit Bisektion")
             print("Krümmungsradius:", radius, "m")
             print("Leitungslänge:", laenge, "m")
@@ -45,9 +46,9 @@ def aufgabe9() -> None:
 
         if ergebnis_regula is not None:
             radius, iterationen = ergebnis_regula
-            laenge = leitung_laenge(radius)
+            laenge = leitung_länge(radius)
 
-            
+            print("--------------------------------")
             print("Aufgabe 9 mit Regula falsi")
             print("Krümmungsradius:", radius, "m")
             print("Leitungslänge:", laenge, "m")

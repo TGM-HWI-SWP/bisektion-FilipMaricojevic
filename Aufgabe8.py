@@ -33,7 +33,7 @@ def solver() -> None:
         n = 0                                           # n wird hier nicht benötigt, bleibt aber wegen der allgemeinen f-Funktion erhalten
         a = 3                                           # Linke Intervallgrenze
         b = 4                                           # Rechte Intervallgrenze
-
+        print("--------------------------------")
         print("Aufgabe 8: Polynom P4(x) = 2x + x² + 3x³ - x⁴")
         print("Passendes Intervall: [3, 4]")
 
