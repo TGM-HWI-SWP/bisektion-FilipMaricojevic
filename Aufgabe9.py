@@ -23,8 +23,13 @@ def aufgabe9() -> None:
         print("Gleichung: x * cosh(50 / x) - x - 10 = 0")
         print("Intervall: [100, 150]")
 
-        exponent = int(input("Geben Sie die Hochzahl für epsilon ein, also 10^: "))  # Eingabe z.B. -5
-        epsilon = 10 ** exponent                                                    # Berechnet epsilon aus der Hochzahl
+        while True:
+            try:
+                exponent = int(input("Geben Sie die Hochzahl für epsilon ein, also 10^: "))
+                epsilon = 10 ** exponent
+                break
+            except ValueError:
+                print("Fehler: Bitte geben Sie eine gültige ganze Zahl ein.")                                                    # Berechnet epsilon aus der Hochzahl
 
         if epsilon <= 0:                                    # Prüft, ob epsilon positiv ist
             print("Fehler: epsilon muss positiv sein.")
