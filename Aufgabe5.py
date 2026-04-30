@@ -2,41 +2,42 @@ import math
 
 def f(x: float, n: float, funktion: str) -> float:
     """Berechnet den Funktionswert f(x)."""
-    return eval(funktion, {"x": x, "n": n, "math": math})   # Führt die Funktion aus und berechnet den Funktionswert für die gegebenen Werte von x und n
+    return eval(funktion, {"x": x, "n": n, "math": math})   # Wertet die eingegebene Funktion aus
 
-def bisektion( a: float, b: float, n: float, epsilon: float, funktion: str) -> tuple[float, int] | None:
+
+def bisektion(a: float, b: float, n: float, epsilon: float, funktion: str) -> tuple[float, int] | None:
     """Berechnet eine Nullstelle mit dem Bisektionsverfahren."""
 
-    fa = f(a, n, funktion)
-    fb = f(b, n, funktion)
+    fa = f(a, n, funktion)          # Funktionswert an der linken Grenze
+    fb = f(b, n, funktion)          # Funktionswert an der rechten Grenze
 
-    if fa == 0:
+    if fa == 0:                     # a ist bereits eine Nullstelle
         return a, 0
 
-    if fb == 0:
+    if fb == 0:                     # b ist bereits eine Nullstelle
         return b, 0
 
-    if fa * fb > 0:
+    if fa * fb > 0:                 # Kein Vorzeichenwechsel im Intervall
         print("Fehler: Kein gültiges Intervall.")
-        return None         # Überprüft, ob die Funktion an den Endpunkten des Intervalls liegt. 
-                            #Wenn beide Funktionswerte das gleiche Vorzeichen haben, wird eine Fehlermeldung ausgegeben und None zurückgegeben.
+        return None
 
-    iterationen = 0
+    iterationen = 0                 # Zählt die Iterationen
 
     while True:
-        c = (a + b) / 2         
-        fc = f(c, n, funktion)
-        iterationen += 1
+        c = (a + b) / 2             # Mittelpunkt berechnen
+        fc = f(c, n, funktion)      # Funktionswert am Mittelpunkt
+        iterationen += 1            # Iterationszähler erhöhen
 
-        if abs(fc) < epsilon:
+        if abs(fc) < epsilon:       # Genauigkeit erreicht
             return c, iterationen
 
-        if f(a, n, funktion) * fc < 0:
+        if f(a, n, funktion) * fc < 0:   # Nullstelle liegt links
             b = c
         else:
-            a = c
+            a = c                         # Nullstelle liegt rechts
 
-def ausgabe( funktion: str, n: float, a: float, b: float, epsilon: float, nullstelle: float, iterationen: int) -> None:
+
+def ausgabe(funktion: str, n: float, a: float, b: float, epsilon: float, nullstelle: float, iterationen: int) -> None:
     """Gibt die Ergebnisse übersichtlich aus."""
 
     print("--------------------------------")
@@ -52,20 +53,21 @@ def ausgabe( funktion: str, n: float, a: float, b: float, epsilon: float, nullst
 def teste_wurzelfunktion(epsilon: float) -> None:
     """Testet den Solver mit n = 25, 81 und 144."""
 
-    funktion = "x**2 - n"
+    funktion = "x**2 - n"           # Wurzelfunktion als Nullstellenproblem
 
     for n in [25, 81, 144]:
-        a = 0
-        b = n if n > 1 else 1
+        a = 0                       # Linke Intervallgrenze
+        b = n if n > 1 else 1       # Rechte Intervallgrenze
         ergebnis = bisektion(a, b, n, epsilon, funktion)
 
-        if ergebnis is not None:    # Wenn das Verfahren eine Nullstelle gefunden hat, werden die Ergebnisse mit der analytischen Lösung verglichen, um die Genauigkeit zu bewerten.
+        if ergebnis is not None:
             nullstelle, iterationen = ergebnis
-            analytisch = math.sqrt(n)   # Berechnet die analytische Lösung, die Quadratwurzel von n, um die Genauigkeit der numerischen Lösung zu überprüfen
+            analytisch = math.sqrt(n)   # Exakte Wurzel zum Vergleich
 
             ausgabe(funktion, n, a, b, epsilon, nullstelle, iterationen)
             print("Analytische Lösung:", analytisch)
-            print("Abweichung zur Wurzel:", abs(nullstelle - analytisch))   # Berechnet die Abweichung zwischen der numerischen Lösung und der analytischen Lösung, um die Genauigkeit des Verfahrens zu bewerten.
+            print("Abweichung zur Wurzel:", abs(nullstelle - analytisch))
+
 
 def solver() -> None:
     """Fragt Benutzereingaben ab und startet den Solver."""
@@ -76,9 +78,9 @@ def solver() -> None:
         n = float(input("Wert für n: "))
         epsilon = float(input("Genauigkeit epsilon: "))
 
-        if epsilon <= 0:
+        if epsilon <= 0:            # epsilon muss positiv sein
             print("Fehler: epsilon muss positiv sein.")
-            return  # Überprüft, ob die eingegebene Genauigkeit epsilon positiv ist. Wenn nicht, wird eine Fehlermeldung ausgegeben und die Funktion wird mit return verlassen.
+            return
 
         a = float(input("Linker Intervallwert a: "))
         b = float(input("Rechter Intervallwert b: "))
@@ -87,7 +89,7 @@ def solver() -> None:
 
         if ergebnis is not None:
             nullstelle, iterationen = ergebnis
-            ausgabe(funktion, n, a, b, epsilon, nullstelle, iterationen)    
+            ausgabe(funktion, n, a, b, epsilon, nullstelle, iterationen)
 
     except ValueError:
         print("Fehler: Bitte gültige Zahlen eingeben.")
@@ -96,9 +98,10 @@ def solver() -> None:
     except SyntaxError:
         print("Fehler: Die Funktion ist syntaktisch falsch.")
 
+
 if __name__ == "__main__":
     print("Automatische Tests für Aufgabe 5:")
-    teste_wurzelfunktion(0.00001)   # Führt automatische Tests für die Wurzelfunktion mit einer Genauigkeit von 0.00001 durch, um die Funktionalität des Bisektionsverfahrens zu überprüfen.
+    teste_wurzelfunktion(0.00001)   # Testet n = 25, 81 und 144
 
     print("\nEigener Solver:")
     solver()

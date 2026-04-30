@@ -1,49 +1,48 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
+
 def f(x: float, n: float) -> float:
     """Berechnet f(x) = x² - n."""
     return x**2 - n
 
+
 def plotter() -> None:
     """Visualisiert die Bisektion mit matplotlib."""
 
-    # Testwerte für Aufgabe 7
-    n = 25
-    epsilon = 0.0001
-    a = 0
-    b = 25
+    n = 25                       # Testwert für die Wurzel
+    epsilon = 0.0001             # Gewünschte Genauigkeit
+    a = 0                        # Linke Intervallgrenze
+    b = 25                       # Rechte Intervallgrenze
 
-    if f(a, n) * f(b, n) > 0:
+    if f(a, n) * f(b, n) > 0:    # Prüft, ob das Intervall gültig ist
         print("Fehler: Kein gültiges Intervall.")
         return
 
-    iterationen = []
-    c_werte = []
-    genauigkeiten = []
+    iterationen = []             # Speichert die Iterationsnummern
+    c_werte = []                 # Speichert die Näherungswerte
+    genauigkeiten = []           # Speichert |f(c)|
 
-    x_werte = np.linspace(a, b, 400)    # Erzeugt 400 gleichmäßig verteilte x-Werte zwischen a und b, um die Funktion f(x) zu plotten.
-    y_werte = f(x_werte, n)
+    x_werte = np.linspace(a, b, 400)    # x-Werte für den Funktionsgraphen
+    y_werte = f(x_werte, n)             # y-Werte für den Funktionsgraphen
 
     iteration = 0
 
     while True:
-        c = (a + b) / 2
-        fc = f(c, n)
-        iteration += 1
+        c = (a + b) / 2                 # Mittelpunkt berechnen
+        fc = f(c, n)                    # Funktionswert bei c
+        iteration += 1                  # Iteration erhöhen
 
         iterationen.append(iteration)
         c_werte.append(c)
-        genauigkeiten.append(abs(fc))   # Speichert die Genauigkeit (den Betrag von f(c)) für jede Iteration, um die Konvergenz zu visualisieren.
+        genauigkeiten.append(abs(fc))
 
-        # Diagramm aktualisieren
-        plt.clf()
+        plt.clf()                       # Vorheriges Diagramm löschen
 
-        # 1. Diagramm: Funktion und aktueller Näherungswert
         plt.subplot(3, 1, 1)
-        plt.plot(x_werte, y_werte, label="f(x) = x² - n")   # Plottet die Funktion f(x) = x² - n über den Bereich von a bis b, um die Form der Funktion zu zeigen und wo die Nullstellen liegen.
-        plt.axhline(0, color="black", linewidth=1)          # Zeichnet eine horizontale Linie bei y=0, um die Nullstellen der Funktion zu verdeutlichen
-        plt.axvline(c, linestyle="--", label=f"c = {c:.5f}")    # Zeichnet eine vertikale Linie bei der aktuellen Näherung c, um zu zeigen, wo die Nullstelle liegt
+        plt.plot(x_werte, y_werte, label="f(x) = x² - n")
+        plt.axhline(0, color="black", linewidth=1)       # x-Achse
+        plt.axvline(c, linestyle="--", label=f"c = {c:.5f}")
         plt.scatter(c, fc)
         plt.title("Bisektionsverfahren")
         plt.xlabel("x")
@@ -51,42 +50,42 @@ def plotter() -> None:
         plt.legend()
         plt.grid(True)
 
-        # 2. Diagramm: Genauigkeit
-        plt.subplot(3, 1, 2)        # Plottet die Genauigkeit (den Betrag von f(c)) über die Iterationen, um zu zeigen, wie schnell die Näherung konvergiert.
+        plt.subplot(3, 1, 2)
         plt.plot(iterationen, genauigkeiten, marker="o")
         plt.title("Aktuelle Genauigkeit je Iteration")
         plt.xlabel("Iteration")
-        plt.ylabel("|f(c)|")        # Plottet die Genauigkeit (den Betrag von f(c)) über die Iterationen, um zu zeigen, wie schnell die Näherung konvergiert.
+        plt.ylabel("|f(c)|")
         plt.grid(True)
 
-        # 3. Diagramm: aktuelle Lösung c
         plt.subplot(3, 1, 3)
-        plt.plot(iterationen, c_werte, marker="o")  # Plottet die aktuellen Näherungswerte c über die Iterationen, um zu zeigen, wie sich die Lösung im Laufe der Zeit entwickelt.
+        plt.plot(iterationen, c_werte, marker="o")
         plt.title("Aktuelle Lösung je Iteration")
         plt.xlabel("Iteration")
         plt.ylabel("c")
         plt.grid(True)
 
-        plt.tight_layout()          # Optimiert die Anordnung der Diagramme, damit sie nicht überlappen und gut lesbar sind.
-        plt.pause(0.7)              # Pausiert die Ausführung für 0.7 Sekunden, um die Diagramme anzuzeigen, bevor sie aktualisiert werden. 
+        plt.tight_layout()              # Ordnet die Diagramme sauber an
+        plt.pause(0.7)                  # Kurze Pause für die Animation
 
-        if abs(fc) < epsilon:
+        if abs(fc) < epsilon:           # Genauigkeit erreicht
             break
 
-        if f(a, n) * fc < 0:
+        if f(a, n) * fc < 0:            # Nullstelle liegt links
             b = c
         else:
-            a = c
+            a = c                       # Nullstelle liegt rechts
+
     print("--------------------------------")
     print("Ergebnis der Bisektion")
     print("n =", n)
     print("Epsilon =", epsilon)
     print("Nullstelle:", c)
-    print("Analytische Lösung:", np.sqrt(n))    # Berechnet die analytische Lösung der Quadratwurzel von n, um die Genauigkeit der gefundenen Nullstelle c zu bewerten.
+    print("Analytische Lösung:", np.sqrt(n))
     print("Iterationen:", iteration)
-    print("Abweichung:", abs(c - np.sqrt(n)))   # Zeigt die Abweichung der gefundenen Nullstelle c von der analytischen Lösung (der Quadratwurzel von n), um die Genauigkeit des Bisektionsverfahrens zu bewerten.
+    print("Abweichung:", abs(c - np.sqrt(n)))
 
-    plt.show()                  # Zeigt die finalen Diagramme an, nachdem die Bisektion abgeschlossen ist
+    plt.show()                          # Zeigt das fertige Diagramm
+
 
 if __name__ == "__main__":
     plotter()

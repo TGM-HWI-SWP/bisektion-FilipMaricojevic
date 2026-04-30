@@ -2,43 +2,45 @@ import math
 
 def f(x: float, n: float, funktion: str) -> float:
     """Berechnet den Funktionswert f(x)."""
-    return eval(funktion, {"x": x, "n": n, "math": math})   # Führt die Funktion aus und berechnet den Funktionswert für die gegebenen Werte von x und n
+    return eval(funktion, {"x": x, "n": n, "math": math})   # Wertet die eingegebene Funktion aus
 
-def regula_falsi( a: float, b: float, n: float, epsilon: float, funktion: str ) -> tuple[float, int] | None:
+
+def regula_falsi(a: float, b: float, n: float, epsilon: float, funktion: str) -> tuple[float, int] | None:
     """Berechnet eine Nullstelle mit dem Regula-falsi-Verfahren."""
 
-    fa = f(a, n, funktion)
-    fb = f(b, n, funktion)
+    fa = f(a, n, funktion)          # Funktionswert an der linken Grenze
+    fb = f(b, n, funktion)          # Funktionswert an der rechten Grenze
 
-    if fa == 0:
+    if fa == 0:                     # a ist bereits eine Nullstelle
         return a, 0
 
-    if fb == 0:
+    if fb == 0:                     # b ist bereits eine Nullstelle
         return b, 0
 
-    if fa * fb > 0:
+    if fa * fb > 0:                 # Kein Vorzeichenwechsel im Intervall
         print("Fehler: Kein gültiges Intervall.")
         return None
 
-    iterationen = 0
+    iterationen = 0                 # Zählt die Iterationen
 
     while True:
-        fa = f(a, n, funktion)
-        fb = f(b, n, funktion)
+        fa = f(a, n, funktion)      # Aktueller Funktionswert bei a
+        fb = f(b, n, funktion)      # Aktueller Funktionswert bei b
 
-        c = b - fb * (b - a) / (fb - fa)    # Berechnet den neuen Schätzwert c basierend auf den Funktionswerten an den Endpunkten a und b.
-        fc = f(c, n, funktion)
-        iterationen += 1
+        c = b - fb * (b - a) / (fb - fa)    # Regula-falsi-Formel
+        fc = f(c, n, funktion)              # Funktionswert am neuen Punkt
+        iterationen += 1                    # Iterationszähler erhöhen
 
-        if abs(fc) < epsilon:
+        if abs(fc) < epsilon:       # Genauigkeit erreicht
             return c, iterationen
 
-        if fa * fc < 0:
+        if fa * fc < 0:             # Nullstelle liegt zwischen a und c
             b = c
         else:
-            a = c
+            a = c                   # Nullstelle liegt zwischen c und b
 
-def ausgabe( funktion: str, n: float, a: float, b: float, epsilon: float, nullstelle: float, iterationen: int ) -> None:
+
+def ausgabe(funktion: str, n: float, a: float, b: float, epsilon: float, nullstelle: float, iterationen: int) -> None:
     """Gibt die Ergebnisse übersichtlich aus."""
 
     print("--------------------------------")
@@ -54,16 +56,16 @@ def ausgabe( funktion: str, n: float, a: float, b: float, epsilon: float, nullst
 def teste_wurzelfunktion(epsilon: float) -> None:
     """Testet Regula falsi mit n = 25, 81 und 144."""
 
-    funktion = "x**2 - n"
+    funktion = "x**2 - n"           # Wurzelfunktion als Nullstellenproblem
 
     for n in [25, 81, 144]:
-        a = 0
-        b = n if n > 1 else 1
+        a = 0                       # Linke Intervallgrenze
+        b = n if n > 1 else 1       # Rechte Intervallgrenze
         ergebnis = regula_falsi(a, b, n, epsilon, funktion)
 
         if ergebnis is not None:
             nullstelle, iterationen = ergebnis
-            analytisch = math.sqrt(n)   # Berechnet die analytische Lösung der Wurzel von n, um die Genauigkeit des Regula-falsi-Verfahrens zu überprüfen.
+            analytisch = math.sqrt(n)   # Exakte Wurzel zum Vergleich
 
             ausgabe(funktion, n, a, b, epsilon, nullstelle, iterationen)
             print("Analytische Lösung:", analytisch)
@@ -79,7 +81,7 @@ def solver2() -> None:
         n = float(input("Wert für n: "))
         epsilon = float(input("Genauigkeit epsilon: "))
 
-        if epsilon <= 0:
+        if epsilon <= 0:            # epsilon muss positiv sein
             print("Fehler: epsilon muss positiv sein.")
             return
 
@@ -101,9 +103,10 @@ def solver2() -> None:
     except ZeroDivisionError:
         print("Fehler: Division durch 0 im Regula-falsi-Verfahren.")
 
+
 if __name__ == "__main__":
     print("Automatische Tests für Aufgabe 6:")
-    teste_wurzelfunktion(0.00001)       # Führt automatische Tests für die Wurzelfunktion mit einer Genauigkeit von 0.00001 durch, um die Funktionalität des Regula-falsi-Verfahrens zu überprüfen.
+    teste_wurzelfunktion(0.00001)   # Testet n = 25, 81 und 144
 
     print("\nEigener Regula-falsi-Solver:")
     solver2()
