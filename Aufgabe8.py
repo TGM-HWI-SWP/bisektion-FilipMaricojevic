@@ -65,8 +65,14 @@ def solver() -> None:
         ausgabe(a, b, n, 10**-8, funktion, -8)          # Test mit epsilon = 10^-8
 
         print("\nEigener Test:")
-        exponent = int(input("Geben Sie die Hochzahl für epsilon ein, also 10^: "))   # Benutzer gibt z.B. -2 oder -8 ein
-        epsilon = 10 ** exponent                                                     # Berechnet daraus epsilon
+        
+        while True:
+            try:
+                exponent = int(input("Geben Sie die Hochzahl für epsilon ein, also 10^: "))   # Benutzer gibt z.B. -2 oder -8 ein
+                epsilon = 10 ** exponent                                                     # Berechnet daraus epsilon
+                break
+            except ValueError:
+                print("Fehler: Bitte geben Sie eine gültige ganze Zahl ein.")                                                     # Berechnet daraus epsilon
 
         if epsilon <= 0:                                  # Prüft, ob epsilon positiv ist
             print("Fehler: epsilon muss eine positive Zahl sein.")

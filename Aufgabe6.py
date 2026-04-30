@@ -75,34 +75,36 @@ def teste_wurzelfunktion(epsilon: float) -> None:
 def solver2() -> None:
     """Fragt Benutzereingaben ab und startet Regula falsi."""
 
-    try:
-        print("Beispiel: x**2 - n")
-        funktion = input("Funktion f(x): ")
-        n = float(input("Wert für n: "))
-        epsilon = float(input("Genauigkeit epsilon: "))
+    while True:                                             # Wiederholt die Eingabe bei Fehlern
+        try:
+            print("Beispiel: x**2 - n")
+            funktion = input("Funktion f(x): ")             # Funktion als Text eingeben
+            n = float(input("Wert für n: "))                # Wert für n einlesen
+            epsilon = float(input("Genauigkeit epsilon: ")) # Genauigkeit einlesen
 
-        if epsilon <= 0:            # epsilon muss positiv sein
-            print("Fehler: epsilon muss positiv sein.")
-            return
+            if epsilon <= 0:                                # Prüft, ob epsilon positiv ist
+                print("Fehler: epsilon muss positiv sein.")
+                continue                                    # Startet die Eingabe neu
 
-        a = float(input("Linker Intervallwert a: "))
-        b = float(input("Rechter Intervallwert b: "))
+            a = float(input("Linker Intervallwert a: "))    # Linke Intervallgrenze
+            b = float(input("Rechter Intervallwert b: "))   # Rechte Intervallgrenze
 
-        ergebnis = regula_falsi(a, b, n, epsilon, funktion)
+            ergebnis = regula_falsi(a, b, n, epsilon, funktion) # Startet Regula falsi
 
-        if ergebnis is not None:
-            nullstelle, iterationen = ergebnis
-            ausgabe(funktion, n, a, b, epsilon, nullstelle, iterationen)
+            if ergebnis is not None:                        # Prüft, ob eine Nullstelle gefunden wurde
+                nullstelle, iterationen = ergebnis          # Speichert Ergebniswerte
+                ausgabe(funktion, n, a, b, epsilon, nullstelle, iterationen)
 
-    except ValueError:
-        print("Fehler: Bitte gültige Zahlen eingeben.")
-    except NameError:
-        print("Fehler: Ungültige Variable in der Funktion.")
-    except SyntaxError:
-        print("Fehler: Die Funktion ist syntaktisch falsch.")
-    except ZeroDivisionError:
-        print("Fehler: Division durch 0 im Regula-falsi-Verfahren.")
+            break                                           # Beendet die Schleife nach gültigem Durchlauf
 
+        except ValueError:
+            print("Fehler: Bitte gültige Zahlen eingeben.") # Fehler bei falscher Zahleneingabe
+        except NameError:
+            print("Fehler: Ungültige Variable in der Funktion.") # Fehler bei falscher Variable
+        except SyntaxError:
+            print("Fehler: Die Funktion ist syntaktisch falsch.") # Fehler bei falscher Funktionsschreibweise
+        except ZeroDivisionError:
+            print("Fehler: Division durch 0 im Regula-falsi-Verfahren.") # Fehler bei Division durch 0
 
 if __name__ == "__main__":
     print("Automatische Tests für Aufgabe 6:")
