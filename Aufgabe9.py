@@ -1,8 +1,7 @@
 import math
 
-from Aufgabe5 import solver, bisektion
-from Aufgabe6 import solver2, regula_falsi
-from Aufgabe7 import plotter
+from Aufgabe5 import bisektion
+from Aufgabe6 import regula_falsi
 
 
 def leitung_länge(radius: float) -> float:
@@ -18,7 +17,7 @@ def aufgabe9() -> None:
         n = 0
         a = 100
         b = 150
-        
+
         print("--------------------------------")
         print("Aufgabe 9: Durchhängende Leitung")
         print("Gleichung: x * cosh(50 / x) - x - 10 = 0")
@@ -59,7 +58,4 @@ def aufgabe9() -> None:
 
 
 if __name__ == "__main__":
-    solver()
-    solver2()
-    plotter()
     aufgabe9()
